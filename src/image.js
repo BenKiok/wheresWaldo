@@ -3,7 +3,7 @@ const image = (() => {
           img = document.createElement("img");
 
     container.id = "image";
-    img.src = "../src/images/Waldo_placeholder.png";
+    img.src = "../src/images/WheresWaldo4";
     container.appendChild(img);
 
     return container;

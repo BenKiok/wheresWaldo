@@ -1,10 +1,9 @@
-const tagger = (() => {
-    const container = document.createElement("div"),
-          reticle = document.createElement("div"),
-          charSelect = document.createElement("select"),
+const dropdown = (() => {
+    const charSelect = document.createElement("select"),
           defaultOption = document.createElement("option");
     
-    container.id = "tagger";
+    charSelect.id = "dropdown";
+    
     defaultOption.innerText = "Select a character";
     charSelect.appendChild(defaultOption);
 
@@ -13,10 +12,8 @@ const tagger = (() => {
         option.innerText = "Character " + (i + 1);
         charSelect.appendChild(option);
     }
-    
-    container.append(reticle, charSelect);
 
-    return container;
+    return charSelect;
 })();
 
-export default tagger;
+export default dropdown;

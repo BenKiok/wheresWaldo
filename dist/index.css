@@ -38,13 +38,18 @@
     position: relative;
 }
 
-#tagger {
+#image img {
+    width: 1200px;
+    height: 750px;
+}
+
+#tagger, #dropdown {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-#tagger div {
+#tagger {
     border: 3px solid black;
     width: 50px;
     height: 50px;
