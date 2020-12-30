@@ -6,6 +6,7 @@ import dropdown from "./dropdown.js";
 
 const app = (() => {
     const app = document.querySelector("#app");
+    let score = 0, id, playerName;
 
     // *** Event listeners ***
     dropdown.addEventListener("input", () => {
@@ -29,7 +30,7 @@ const app = (() => {
                             marker.style.top = (charY) + "px";
                             marker.style.left = (charX) + "px";
 
-                            Array.from(list.childNodes[1].childNodes).some((li) => {
+                            Array.from(list.querySelector("ul").childNodes).some((li) => {
                                 if (li.innerText = "Waldo") {
                                     li.classList.add("crossout");
                                     return true;
@@ -71,9 +72,31 @@ const app = (() => {
         }
     });
 
-    start.childNodes[1].addEventListener("click", () => {
+    start.querySelector("#checkbox").addEventListener("input", (event) => {
+        const input = start.querySelector("#text");
+        input.classList.toggle("noDisplay");
+
+        if (input.classList.contains("noDisplay")) {
+            input.value = "";
+        }
+    });
+
+    start.querySelector("button").addEventListener("click", () => {
+        if (start.querySelector("#checkbox").checked) {
+            if (start.querySelector("#text").value) {
+                playerName = start.querySelector("#text").value;
+                start.querySelector("#text").value = "";
+            } else {
+                alert("Must type a player name to time your game.");
+
+                return;
+            }
+        }
+
         document.querySelector("#app").append(list, image);
         start.remove();
+
+        id = startTimer();
     });
 
     // *** Starts application ***
@@ -90,7 +113,7 @@ const app = (() => {
     function verifyWin () {
         let allCharsFound = true;
 
-        Array.from(list.childNodes[1].childNodes).every((li) => {
+        Array.from(list.querySelector("ul").childNodes).every((li) => {
             if (!li.classList.contains("crossout")) {
                 allCharsFound = false;
             }
@@ -99,24 +122,18 @@ const app = (() => {
         });
 
         if (allCharsFound) {
-            alert("Congradulations! You found them all!");
-            alert("Thanks for playing!");
+            stopTimer();
+            
+            alert("Congradulations" + (playerName ? (" " + playerName) : "") + "! You found them all!");
+            alert((score ? "Your time was " + (score/1000) + " seconds. " : "") + "Thanks for playing!");
             
             Array.from(image.childNodes).forEach((node) => {
                 if (node.classList.contains("charMarker")) {
                     node.remove();
                 }
-
-                // if (reticule) {
-                //     reticule.remove();
-                // }
-
-                // if (dropdown) {
-                //     dropdown.remove();
-                // }
             });
 
-            Array.from(list.childNodes[1].childNodes).forEach((li) => {
+            Array.from(list.querySelector("ul").childNodes).forEach((li) => {
                 li.classList.remove("crossout");
             });
 
@@ -124,6 +141,19 @@ const app = (() => {
             image.remove();
 
             app.appendChild(start);
+
+            score = 0;
+            playerName = null;
         }
+    }
+
+    function startTimer () {
+        return setInterval(() => {
+            score += 10;
+        }, 10);
+    }
+
+    function stopTimer (id) {
+        clearInterval(id);
     }
 })();

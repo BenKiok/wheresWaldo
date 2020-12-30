@@ -22,10 +22,30 @@
     letter-spacing: 0.2rem;
 }
 
+#start input[type="text"] {
+    font-size: 1.5rem;
+    width: 188px;
+    padding: 6px;
+    margin-top: -40px;
+}
+
 #start button {
     font-size: 1.5rem;
     width: 200px;
     padding: 6px 0;
+}
+
+#checkboxContainer {
+    display: flex;
+    width: 300px;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.8rem;
+}
+
+#checkboxContainer input[type="checkbox"] {
+    height: 23px;
+    width: 23px;
 }
 
 #list li {
@@ -68,4 +88,8 @@
 
 .crossout {
     text-decoration: line-through;
+}
+
+.noDisplay {
+    display: none;
 }
