@@ -6,7 +6,9 @@ import dropdown from "./dropdown.js";
 
 const app = (() => {
     const app = document.querySelector("#app");
-    let score = 0, id, playerName;
+    let score = 0, 
+        id, 
+        playerName;
 
     // *** Event listeners ***
     dropdown.addEventListener("input", () => {
@@ -16,10 +18,10 @@ const app = (() => {
             userY = reticule.offsetTop;
 
         if (dropdown.value != "Select a character") {
-            database.once("value")
-                .then((promise) =>  {
-                    charX = promise.val()["X"];
-                    charY = promise.val()["Y"];
+            database.child("Waldo").once("value")
+                .then((snapshot) =>  {
+                    charX = snapshot.val()["X"];
+                    charY = snapshot.val()["Y"];
                     
                     if (charX - 31 <= userX && charX +  31 >= userX) {
                         if (charY - 31 <= userY && charY + 31 >= userY) {
@@ -122,11 +124,17 @@ const app = (() => {
         });
 
         if (allCharsFound) {
-            stopTimer();
+            if (id) {
+                stopTimer(id);
+            }
             
             alert("Congradulations" + (playerName ? (" " + playerName) : "") + "! You found them all!");
             alert((score ? "Your time was " + (score/1000) + " seconds. " : "") + "Thanks for playing!");
             
+            if (score) {
+                verifyScore(score, playerName);
+            }
+
             Array.from(image.childNodes).forEach((node) => {
                 if (node.classList.contains("charMarker")) {
                     node.remove();
@@ -144,6 +152,7 @@ const app = (() => {
 
             score = 0;
             playerName = null;
+            id = null;
         }
     }
 
@@ -155,5 +164,29 @@ const app = (() => {
 
     function stopTimer (id) {
         clearInterval(id);
+    }
+
+    function verifyScore (score, name) {
+        database.once('value', function(snapshot) {
+            if (snapshot.hasChild("Scores")) {
+                database.child("Scores").once("value")
+                .then((snapshot) => {
+                    const scoreboard = snapshot.val()
+
+                    for (const scurr in scoreboard) {
+                        if (score < scoreboard[scurr]) {
+                            scoreboard[name] = score;
+                            database.update({ "Scores": scoreboard });
+                            break;
+                        }
+                    }
+
+                });
+            } else {
+                let obj = {};
+                obj[name] = score;
+                database.update({ "Scores": obj });
+            }
+        });
     }
 })();
