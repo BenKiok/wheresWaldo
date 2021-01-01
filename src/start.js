@@ -5,11 +5,13 @@ const start = (() => {
           checkboxLabel = document.createElement("label"),
           checkbox = document.createElement("input"),
           textbox = document.createElement("input"),
-          start = document.createElement("button");
+          start = document.createElement("button"),
+          scoreboard = document.createElement("button");
     
     container.id = "start";
     h1.innerText = "Where's Waldo?";
     start.innerText = "Start!";
+    scoreboard.innerText = "Scoreboard";
     checkDiv.id = "checkboxContainer";
     checkboxLabel.innerText = "Time My Game:";
     checkboxLabel.for = "checkbox";
@@ -21,7 +23,7 @@ const start = (() => {
     textbox.classList.add("noDisplay");
 
     checkDiv.append(checkboxLabel, checkbox);
-    container.append(h1, checkDiv, textbox, start);
+    container.append(h1, checkDiv, textbox, start, scoreboard);
 
     return container;
 })();

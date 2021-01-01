@@ -3,6 +3,7 @@ import start from "./start.js";
 import image from "./image.js";
 import reticule from "./reticule.js";
 import dropdown from "./dropdown.js";
+import scoreboard from "./scoreboard.js";
 
 const app = (() => {
     const app = document.querySelector("#app");
@@ -99,6 +100,16 @@ const app = (() => {
         start.remove();
 
         id = startTimer();
+    });
+
+    start.querySelectorAll("button")[1].addEventListener("click", () => {
+        start.remove();
+        app.appendChild(scoreboard);
+
+        scoreboard.querySelector("button").addEventListener("click", () => {
+            scoreboard.remove();
+            app.appendChild(start);
+        }); 
     });
 
     // *** Starts application ***

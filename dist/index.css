@@ -76,6 +76,33 @@
     border-radius: 10px;
 }
 
+#score {
+    text-align: center;
+}
+
+#score h1 {
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+    margin-bottom: 25px;
+}
+
+#score ul {
+    text-align: left;
+}
+
+#score li {
+    list-style-type: none;
+    font-size: 1.7rem;
+    margin-bottom: 25px;
+}
+
+#score button {
+    font-size: 1.5rem;
+    width: 200px;
+    padding: 6px 0;
+    margin-top: 50px;
+}
+
 .charMarker {
     position: absolute;
     top: 0;
